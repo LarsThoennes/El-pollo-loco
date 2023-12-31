@@ -24,11 +24,13 @@ class Character extends MovableObject {
             //Change the value of the x axis by pressing the right arrow
             if(this.world.keyboard.RIGHT){
                 this.x += this.speed;
+                this.otherDirection = false;
             }
 
             //Change the value of the x axis by pressing the left arrow
             if(this.world.keyboard.LEFT){
                 this.x -= this.speed;
+                this.otherDirection = true;
             }
         },1000 / 60);
 
