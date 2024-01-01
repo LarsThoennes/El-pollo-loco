@@ -11,12 +11,23 @@ class World {
         this.canvas = canvas;
         this.keyboard = keyboard;
         this.setWorld();
+        this.checkCollisions();
         this.draw();
     }
+
     setWorld(){
         this.character.world = this;
-
     };
+
+    checkCollisions() {
+        setInterval(() => {
+            this.level.enemies.forEach((enemy) => {
+                if(this.character.isColliding(enemy)){
+                    this.character.hit();
+                }
+            });
+        }, 100);
+    }
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
