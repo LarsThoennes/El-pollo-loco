@@ -2,9 +2,26 @@ body{
     display: flex;
     align-items: center;
     flex-direction: column;
+    background-image: url('img/5_background/full_screen_background.jpg');
+    background-size: cover;
+    background-position: center;
+    font-family: 'zabras',Arial, Helvetica, sans-serif;
+    
+    
 }
+
 canvas{
     background-color: black;
-    margin-top: 20vh;
     border-radius: 30px;
+}
+
+h1{
+    font-size: 100px;
+    letter-spacing: 5px;
+    text-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5);
+    color: rgb(250,150,1);
+}
+@font-face {
+    font-family: 'zabras';
+    src:url('fonts/zabars.ttf')  format('truetype');
 }

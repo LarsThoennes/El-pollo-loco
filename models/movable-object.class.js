@@ -16,17 +16,10 @@ class MovableObject extends DrawableObjects {
     }
 
     isAboveGround(){
-        return this.y < 120;
-        
-    }
-
-    drawFrame(ctx){
-        if(this instanceof Character || this instanceof Chicken || this instanceof Endboss) {
-            ctx.beginPath();
-            ctx.lineWidth = '5';
-            ctx.strokeStyle = 'blue';
-            ctx.rect(this.x, this.y, this.width, this.height);
-            ctx.stroke();
+        if(this instanceof ThrowableObjects){
+            return true;
+        } else {
+            return this.y < 120;
         }
     }
 

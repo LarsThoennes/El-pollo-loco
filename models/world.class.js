@@ -5,13 +5,15 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
+    statusbar = new Statusbar();
+    ThrowableObject = [];
 
     constructor(canvas, keyboard){
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
         this.setWorld();
-        this.checkCollisions();
+        this.run();
         this.draw();
     }
 
@@ -19,23 +21,44 @@ class World {
         this.character.world = this;
     };
 
-    checkCollisions() {
+    run() {
         setInterval(() => {
-            this.level.enemies.forEach((enemy) => {
-                if(this.character.isColliding(enemy)){
-                    this.character.hit();
-                }
-            });
+            this.checkCollisions();
+            this.checkThrowObjects();
         }, 100);
+    }
+
+    checkCollisions(){
+        this.level.enemies.forEach((enemy) => {
+            if(this.character.isColliding(enemy)){
+                this.character.hit();
+                this.statusbar.setPercentage(this.character.energy);
+            }
+        });
+    }
+
+    checkThrowObjects(){
+        if(this.keyboard.THROW) {
+            let bottle = new ThrowableObjects(this.character.x + 100 , this.character.y + 100);
+            this.ThrowableObject.push(bottle);
+        }
     }
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
         this.ctx.translate(this.camera_x, 0);
+
         this.addObjectsToMap(this.level.backgroundObjects);
-        this.addObjectsToMap(this.level.clouds);
+
+        this.ctx.translate(-this.camera_x, 0);//Kamera wird zurück geschoben
+        this.addToMap(this.statusbar); // So wird die Statusbar dauerhaft im Bild angezeigt
+        this.ctx.translate(this.camera_x, 0);// kamera wird nach vrone geschoben
+
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.ThrowableObject);
+        
         this.ctx.translate(-this.camera_x, 0);
 
         self = this;
