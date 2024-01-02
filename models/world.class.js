@@ -5,7 +5,9 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
-    statusbar = new Statusbar();
+    statusbarHealth = new StatusbarHealth();
+    statusbarCoin = new StatusbarCoin();
+    statusBarBottle = new StatusbarBottle();
     ThrowableObject = [];
 
     constructor(canvas, keyboard){
@@ -32,7 +34,7 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if(this.character.isColliding(enemy)){
                 this.character.hit();
-                this.statusbar.setPercentage(this.character.energy);
+                this.statusbarHealth.setPercentage(this.character.energy);
             }
         });
     }
@@ -52,7 +54,9 @@ class World {
         this.addObjectsToMap(this.level.backgroundObjects);
 
         this.ctx.translate(-this.camera_x, 0);//Kamera wird zurück geschoben
-        this.addToMap(this.statusbar); // So wird die Statusbar dauerhaft im Bild angezeigt
+        this.addToMap(this.statusbarHealth); // So wird die Statusbar dauerhaft im Bild angezeigt
+        this.addToMap(this.statusbarCoin);
+        this.addToMap(this.statusBarBottle);
         this.ctx.translate(this.camera_x, 0);// kamera wird nach vrone geschoben
 
         this.addToMap(this.character);
